@@ -43,6 +43,9 @@ class HealthCareController extends Controller
             'opening_hours' => 'required',
             'closing_hours' => 'required',
             'history' => 'string|nullable',
+            'map_link' => 'string|nullable',
+            'from_day' => 'string|nullable',
+            'to_day' => 'string|nullable',
         ]);
 
         $healthCare = HealthCare::create($validatedData);
@@ -90,6 +93,9 @@ class HealthCareController extends Controller
             'opening_hours' => 'required',
             'closing_hours' => 'required',
             'history' => 'string|nullable',
+            'map_link' => 'string|nullable',
+            'from_day' => 'string|nullable',
+            'to_day' => 'string|nullable',
         ]);
 
         $healthCare->update($validatedData);
@@ -113,7 +119,7 @@ class HealthCareController extends Controller
     {
         $this->authorize('viewAny',HealthCare::class);
 
-        $query = HealthCare::query();
+        $query = HealthCare::healthcare();
 
         return DataTables::of($query)
             ->addColumn('action', function ($healthcare) {

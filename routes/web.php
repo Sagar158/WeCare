@@ -1,14 +1,16 @@
 <?php
 
-use App\Http\Controllers\AppointmentsController;
-use App\Http\Controllers\DoctorController;
-use App\Http\Controllers\HealthCareController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SpecializationsController;
 use App\Http\Controllers\UserTypeController;
+use App\Http\Controllers\HealthCareController;
+use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\RecordingsController;
+use App\Http\Controllers\SpecializationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +23,16 @@ use App\Http\Controllers\UserTypeController;
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.index');
+Route::controller(MainController::class)->group(function(){
+    Route::get('/','index')->name('home');
+    Route::get('health-center/{healthCenterId}','center')->name('center');
+    Route::get('contact-us','contactus')->name('contact-us');
+    Route::post('contact-us/store','contactStore')->name('contact-us.store');
+    Route::get('all-doctors','doctor')->name('all.doctors');
 });
+
+
+
 
 Route::get('/dashboard', function () {
     if(auth()->user()->user_type_id == '3')
@@ -36,14 +45,27 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
 
 
+    Route::name('recordings.')->prefix('recordings')->controller(RecordingsController::class)->group(function(){
+        Route::get('/','index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::get('/{id}/show', 'show')->name('show');
+        Route::post('/{id}/update', 'update')->name('update');
+        Route::post('/{id}/delete', 'destroy')->name('destroy');
+        Route::get('data','getRecordingData')->name('getRecordingData');
+    });
+
     Route::name('appointments.')->prefix('appointments')->controller(AppointmentsController::class)->group(function(){
         Route::get('/','index')->name('index');
         Route::get('/create', 'create')->name('create');
         Route::post('/store', 'store')->name('store');
         Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::get('/{id}/show', 'show')->name('show');
         Route::post('/{id}/update', 'update')->name('update');
         Route::post('/{id}/delete', 'destroy')->name('destroy');
         Route::get('data','getAppointmentsData')->name('getAppointmentsData');
+        Route::post('change/status','changeStatus')->name('changeStatus');
     });
 
 

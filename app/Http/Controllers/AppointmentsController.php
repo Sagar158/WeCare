@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Models\Appointments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,6 +53,7 @@ class AppointmentsController extends Controller
         try
         {
             $appointment = new Appointments();
+            $appointment->appointment_number = Helper::generateUniqueKey($appointment);
             $appointment->patient_id = $validatedData['patient_id'];
             $appointment->appointment_date = $validatedData['appointment_date'];
             $appointment->appointment_time = $validatedData['appointment_time'];
@@ -69,15 +71,18 @@ class AppointmentsController extends Controller
             throw new \Exception("Error occurred: " . $e->getMessage());
         }
 
-        return redirect()->route('appointments.index')->with('success', 'Doctor updated successfully');
+        return redirect()->route('appointments.index')->with('success', 'Appointment Booked successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Appointments $appointments)
+    public function show($appointmentId)
     {
-        //
+        $title = $this->title;
+        $this->authorize('viewAny',Appointments::class);
+        $appointment = Appointments::with(['doctor','healthcare','patient','specialization'])->findOrFail($appointmentId);
+        return view('appointments.show', compact('title','appointment'));
     }
 
     /**
@@ -85,23 +90,62 @@ class AppointmentsController extends Controller
      */
     public function edit($appointmentId)
     {
-        //
+        $title = $this->title;
+        $this->authorize('update',Appointments::class);
+        $appointment = Appointments::findOrFail($appointmentId);
+        return view('appointments.edit', compact('title','appointment'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Appointments $appointments)
+    public function update(Request $request, $appointmentId)
     {
-        //
+        $this->authorize('update', Appointments::class);
+        $validatedData = $request->validate([
+            'patient_id' => 'required',
+            'appointment_date' => 'required',
+            'appointment_time' => 'required',
+            'healthcare_id' => 'required',
+            'specialization_id' => 'required',
+            'doctor_id' => 'required',
+            'type' => 'required',
+            'reason' => 'nullable|string',
+
+        ]);
+        DB::beginTransaction();
+        try
+        {
+            $appointment = Appointments::findOrFail($appointmentId);
+            $appointment->patient_id = $validatedData['patient_id'];
+            $appointment->appointment_date = $validatedData['appointment_date'];
+            $appointment->appointment_time = $validatedData['appointment_time'];
+            $appointment->type = $validatedData['type'];
+            $appointment->healthcare_id = $validatedData['healthcare_id'];
+            $appointment->specialization_id = $validatedData['specialization_id'];
+            $appointment->doctor_id = $validatedData['doctor_id'];
+            $appointment->reason = $validatedData['reason'];
+            $appointment->save();
+            DB::commit();
+        }
+        catch(\Exception $e)
+        {
+            DB::rollback();
+            throw new \Exception("Error occurred: " . $e->getMessage());
+        }
+
+        return redirect()->route('appointments.index')->with('success', 'Appointment updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Appointments $appointments)
+    public function destroy($appointmentId)
     {
-        //
+        $this->authorize('delete',Appointments::class);
+        $record = Appointments::destroy($appointmentId);
+        return response()->json(['success' => $record]);
+
     }
 
     public function getAppointmentsData()
@@ -133,19 +177,30 @@ class AppointmentsController extends Controller
                 return ucfirst($appointment->status);
             })
             ->addColumn('action', function ($appointment) {
-                // return '
-                //             <div class="btn-group" role="group">
-                //                 <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
-                //                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                //                     <a class="dropdown-item" href="'.route('appointments.edit', $appointment->id).'">Edit</a>
-                //                     <a class="dropdown-item delete-record" href="#" data-route="'.route('appointments.destroy', $appointment->id).'" data-id="'.$appointment->id.'">Delete</a>
-                //                 </div>
-                //             </div>
-                //         ';
-                return '';
+                return '
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                                <a class="dropdown-item" href="'.route('appointments.show', $appointment->id).'">Show</a>
+                                <a class="dropdown-item" href="'.route('appointments.edit', $appointment->id).'">Edit</a>
+                                    <a class="dropdown-item delete-record" href="#" data-route="'.route('appointments.destroy', $appointment->id).'" data-id="'.$appointment->id.'">Delete</a>
+                                </div>
+                            </div>
+                        ';
             })
             ->rawColumns(['action','appointment_date_time','patient_name','doctor','healthcare_center','type'])
             ->make(true);
     }
 
+    public function changeStatus(Request $request)
+    {
+        $status = $request->status;
+        $appointmentId = $request->appointmentId;
+        $appointmentStatus = Appointments::where('id', $appointmentId)->update([
+            'status' => $status
+        ]);
+
+        return response()->json(['success' => $appointmentStatus]);
+
+    }
 }

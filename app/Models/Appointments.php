@@ -10,8 +10,15 @@ class Appointments extends Model
     use HasFactory;
 
     protected $fillable = [
-        'patient_id','appointment_date','appointment_time','type','healthcare_id','specialization_id','doctor_id','reason','status'
+        'patient_id','appointment_date','appointment_time','type','healthcare_id','specialization_id','doctor_id','reason','status','appointment_number'
     ];
+
+    public static $status = array(
+        'pending' => 'Pending',
+        'confirmed' => 'Confirmed',
+        'cancelled' => 'Cancelled',
+        'completed' => 'Completed',
+    );
 
     public function doctor()
     {
@@ -21,6 +28,10 @@ class Appointments extends Model
     public function healthcare()
     {
         return $this->hasOne(HealthCare::class, 'id','healthcare_id');
+    }
+    public function specialization()
+    {
+        return $this->hasOne(Specializations::class, 'id','specialization_id');
     }
     public function patient()
     {
@@ -36,6 +47,11 @@ class Appointments extends Model
         {
             return $query->where('patient_id', $userId);
         }
+    }
+
+
+    public static function status(){
+
     }
 
 

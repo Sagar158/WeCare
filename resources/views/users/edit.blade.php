@@ -22,6 +22,9 @@
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <x-select-box id="user_type_id" name="user_type_id" :value="old('user_type_id', $user->user_type_id)" :values="\App\Helpers\Helper::fetchUserType()" autocomplete="off" placeholder="User Access Level" />
                     </div>
+                    <div class="col-lg-4 col-sm-12 col-md-4 health-care-div" style="display: none;">
+                        <x-select-box id="health_care_id" name="health_care_id" :value="old('health_care_id', $user->health_care_id)" :values="\App\Helpers\Helper::fetchHealthCare()" autocomplete="off" placeholder="Health Care" />
+                    </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <x-text-input id="contact_number" type="text" name="contact_number" :value="old('contact_number', $user->contact_number)" autofocus autocomplete="off" placeholder="Contact Number" />
                     </div>
@@ -47,4 +50,27 @@
             </form>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            $(document).ready(function(){
+                showUserType();
+                $(document).on('change','select[name="user_type_id"]', function(){
+                    showUserType();
+                });
+            });
+
+            function showUserType()
+            {
+                var user_type_id = $('select[name="user_type_id"]').val();
+                if(user_type_id == 2)
+                {
+                    $('.health-care-div').show('slow');
+                }
+                else
+                {
+                    $('.health-care-div').hide('slow');
+                }
+            }
+        </script>
+    @endpush
 </x-app-layout>

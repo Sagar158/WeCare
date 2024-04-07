@@ -52,9 +52,10 @@
     <script src="{{ asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
     <script src="{{ asset('assets/js/data-table.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js">
-        <script src="{{ asset('assets/js/sweetalert.js') }}"></script>
+    <script src="{{ asset('assets/js/sweetalert.js') }}"></script>
     <script src="{{ asset('assets/vendors/dropify/dist/dropify.min.js') }}"></script>
 	<script src="{{ asset('assets/js/dropify.js') }}"></script>
+    @stack('scripts')
 
     <script>
             function refreshSelectBox()
@@ -93,7 +94,6 @@
                 });
             }
     </script>
-    @stack('scripts')
     <script>
         $(document).ready(function(){
             $("#alert").fadeTo(5000, 500).slideUp(1000, function(){

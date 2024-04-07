@@ -21,9 +21,21 @@ class Doctor extends Model
     {
         return $this->hasOne(Specializations::class,'id','specialization_id');
     }
+
     public function healthcare()
     {
         return $this->hasOne(HealthCare::class,'id','health_care_id');
+    }
+
+    public function scopeHealthcare($query)
+    {
+        $userType = auth()->user()->user_type_id;
+        $userId = auth()->user()->id;
+        $healthCareId = auth()->user()->health_care_id;
+        if($userType == 2)
+        {
+            return $query->where('health_care_id', $healthCareId);
+        }
     }
 
 }

@@ -20,11 +20,21 @@
                         <x-text-input id="contact_number" type="text" name="contact_number" :value="old('contact_number', $healthcare->contact_number)" required autofocus autocomplete="off" placeholder="Contact Number" />
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
+                        <x-select-box id="from_day" name="from_day" :value="old('from_day', $healthcare->from_day)" :values="\App\Helpers\Helper::$weekdays" autocomplete="off" placeholder="From Day" />
+                    </div>
+                    <div class="col-lg-4 col-sm-12 col-md-4">
+                        <x-select-box id="to_day" name="to_day" :value="old('to_day', $healthcare->to_day)" :values="\App\Helpers\Helper::$weekdays" autocomplete="off" placeholder="To Day" />
+                    </div>
+                    <div class="col-lg-4 col-sm-12 col-md-4">
                         <x-text-input id="opening_hours" type="time" name="opening_hours" :value="old('opening_hours', $healthcare->opening_hours)" required autofocus autocomplete="off" placeholder="Opening Hours" />
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
                         <x-text-input id="closing_hours" type="time" name="closing_hours" :value="old('closing_hours', $healthcare->closing_hours)" required autofocus autocomplete="off" placeholder="Closing Hours" />
                     </div>
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <x-text-input id="map_link" type="text" name="map_link" :value="old('map_link', $healthcare->map_link)" required autofocus autocomplete="off" placeholder="Map Embeded Link" />
+                    </div>
+
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <x-select-box id="specialization_id[]" name="specialization_id[]" multiple="true" extraClass="specializations" selectedValues="{{ isset($selectedSpecializations) ? $selectedSpecializations : '' }}" value="" :values="\App\Helpers\Helper::fetchSpecializations()" autocomplete="off" placeholder="Specializations" />
                     </div>

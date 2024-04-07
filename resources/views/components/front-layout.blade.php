@@ -8,6 +8,7 @@
   <title>WeCare HomePage</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Favicons -->
   <link href="{{ asset('frontend/assets/img/favicon.png') }}" rel="icon">
@@ -44,14 +45,6 @@
   <!-- ======= Header ======= -->
    <x-front-header></x-front-header>
   <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex align-items-center">
-    <div class="container">
-      <h1>Welcome to WeCare</h1>
-      <h2>We are team of talented designers making websites with Bootstrap</h2>
-      <a href="#about" class="btn-get-started scrollto">Get Started</a>
-    </div>
-  </section><!-- End Hero -->
-
   <main id="main">
     {{ $slot }}
   </main><!-- End #main -->
@@ -69,6 +62,36 @@
 
   <!-- Template Main JS File -->
   <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
+ @push('scripts')
+ <script>
+    $(document).ready(function () {
+        // When the form is submitted
+        $('#contactForm').on('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            $.ajax({
+                url: $(this).attr('action'), // Use the action attribute of the form
+                type: 'POST',
+                headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                data: $(this).serialize(), // Serialize the form data
+                beforeSend: function () {
+                    $('.loading').show(); // Show loading indicator
+                },
+                success: function(response) {
+                    $('.loading').hide(); // Hide loading indicator
+                    if(response.success) {
+                        $('.sent-message').show().text("Your message has been sent. Thank you!");
+                        $('#contactForm')[0].reset();
+                    } else {
+                        $('.error-message').show().text("There was an unexpected error.");
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 

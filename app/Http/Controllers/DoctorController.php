@@ -133,7 +133,7 @@ class DoctorController extends Controller
     public function getDoctorData(){
         $this->authorize('viewAny',Doctor::class);
 
-        $query = Doctor::with(['specialization','healthcare']);
+        $query = Doctor::with(['specialization','healthcare'])->healthcare();
 
         return DataTables::of($query)
             ->addColumn('specialization',function($doctor){

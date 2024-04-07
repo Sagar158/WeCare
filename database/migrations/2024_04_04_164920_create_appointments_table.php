@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_id');
+            $table->integer('appointment_number');
             $table->string('appointment_date');
             $table->string('appointment_time');
             $table->enum('type',['recording','visit'])->default('visit');
@@ -21,7 +22,7 @@ return new class extends Migration
             $table->integer('specialization_id');
             $table->integer('doctor_id'); //This will be doctor id
             $table->longText('reason');
-            $table->enum('status',['pending','confirmed','cancelled'])->default('pending');
+            $table->enum('status',['pending','confirmed','cancelled','completed'])->default('pending');
             $table->timestamps();
         });
     }

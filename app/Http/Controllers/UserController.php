@@ -58,6 +58,10 @@ class UserController extends Controller
         $user->contact_number = $validatedData['contact_number'];
         $user->address = $validatedData['address'];
         $user->age = $validatedData['age'];
+        if($request->user_type_id == 2)
+        {
+            $user->health_care_id = $request->health_care_id;
+        }
         $user->password = Hash::make($validatedData['password']);
         $user->save();
 
@@ -110,7 +114,10 @@ class UserController extends Controller
         $user->address = $validatedData['address'];
         $user->age = $validatedData['age'];
         $user->date_of_birth = $validatedData['date_of_birth'];
-
+        if($request->user_type_id == 2)
+        {
+            $user->health_care_id = $request->health_care_id;
+        }
         if(!empty($validatedData['password']))
         {
 

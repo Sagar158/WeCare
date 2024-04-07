@@ -30,10 +30,10 @@
                         <x-select-box id="healthcare_id" name="healthcare_id" :value="old('healthcare_id', $appointment->healthcare_id)" :values="\App\Helpers\Helper::fetchHealthCare()" autocomplete="off" placeholder="Health Care" />
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
-                        <x-select-box id="specialization_id" name="specialization_id" :value="old('specialization_id', $appointment->specialization_id)" extraClass="ajax-endpoint" endpoint="{{ route('healthcare.doctor.specialization') }}" autocomplete="off" placeholder="Specializations" />
+                        <x-select-box id="specialization_id" name="specialization_id" :value="old('specialization_id', $appointment->specialization_id)" extraClass="ajax-endpoint" endpoint="{{ route('healthcare.doctor.specialization') }}" autocomplete="off" placeholder="Specializations" optionText="{{ isset($appointment->specialization_id) ?  \App\Models\Specializations::where('id', $appointment->specialization_id)->first()->name : ''  }}"  />
                     </div>
                     <div class="col-lg-4 col-sm-12 col-md-4">
-                        <x-select-box id="doctor_id" name="doctor_id" :value="old('doctor_id', $appointment->doctor_id)" extraClass="ajax-endpoint" endpoint="{{ route('doctors.fetch.withspecialization') }}" autocomplete="off" placeholder="Doctor" />
+                        <x-select-box id="doctor_id" name="doctor_id" :value="old('doctor_id', $appointment->doctor_id)" extraClass="ajax-endpoint" endpoint="{{ route('doctors.fetch.withspecialization') }}" autocomplete="off" placeholder="Doctor" optionText="{{ isset($appointment->doctor_id) ?  \App\Models\Doctor::where('id', $appointment->doctor_id)->first()->name : '' }}"/>
                     </div>
                     <div class="col-lg-12 col-sm-12 col-md-12">
                         <x-text-area id="reason" type="text" name="reason" :value="old('reason', $appointment->reason)" autofocus autocomplete="off" placeholder="Reason" />

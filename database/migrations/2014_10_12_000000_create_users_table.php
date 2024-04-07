@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('contact_number')->nullable();
             $table->string('address')->nullable();
             $table->integer('age')->default(1)->nullable();
+            $table->integer('health_care_id')->nullable();
             $table->enum('gender',['male','female','other'])->default('male');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

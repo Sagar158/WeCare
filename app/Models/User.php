@@ -24,6 +24,7 @@ class User extends Authenticatable
         'date_of_birth',
         'contact_number',
         'address',
+        'health_care_id',
         'age',
         'gender',
         'user_type_id',

@@ -41,12 +41,14 @@ class SpecializationsController extends Controller
                 'required',
                 'string',
                 Rule::unique('specializations', 'name'),
-            ]
+            ],
+            'description' => 'string'
         ]);
         DB::beginTransaction();
         try{
                 $specialization = new Specializations();
                 $specialization->name = $validatedData['name'];
+                $specialization->description = $validatedData['description'];
                 $specialization->save();
                 DB::commit();
         }
@@ -78,14 +80,15 @@ class SpecializationsController extends Controller
                 'required',
                 'string',
                 Rule::unique('specializations', 'name')->ignore($specializationId),
-            ]
+            ],
+            'description' => 'string'
         ]);
         DB::beginTransaction();
         try
         {
             $specialization = Specializations::findOrFail($specializationId);
             $specialization->name = $validatedData['name'];
-
+            $specialization->description = $validatedData['description'];
             $specialization->save();
 
             DB::commit();

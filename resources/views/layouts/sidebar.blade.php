@@ -53,7 +53,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="javascript::void(0);" class="nav-link">
+            <a href="{{ route('recordings.index') }}" class="nav-link">
                 <i class="link-icon" data-feather="link"></i>
                 <span class="link-title">Recordings</span>
             </a>
