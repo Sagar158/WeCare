@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->integer('patient_id');
-            $table->integer('appointment_number');
+            $table->string('appointment_number');
             $table->string('appointment_date');
             $table->string('appointment_time');
             $table->enum('type',['recording','visit'])->default('visit');
