@@ -7,9 +7,12 @@ use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserTypeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HealthCareController;
-use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\RecordingsController;
+use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\MedicalPostsController;
+use App\Http\Controllers\TrafficPostsController;
 use App\Http\Controllers\SpecializationsController;
 
 /*
@@ -29,21 +32,38 @@ Route::controller(MainController::class)->group(function(){
     Route::get('contact-us','contactus')->name('contact-us');
     Route::post('contact-us/store','contactStore')->name('contact-us.store');
     Route::get('all-doctors','doctor')->name('all.doctors');
+    Route::get('{trafficPostId}/traffic-post','trafficPost')->name('trafficPost');
+    Route::get('{medicalPostId}/medical-post','medicalPost')->name('medicalPost');
+    Route::get('all-traffic-posts','trafficPosts')->name('all.traffic.posts');
+    Route::get('all-medical-posts','medicalPosts')->name('all.medical.posts');
 });
 
 
 
-
-Route::get('/dashboard', function () {
-    if(auth()->user()->user_type_id == '3')
-    {
-        return redirect()->route('appointments.index');
-    }
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
 
+    Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::name('traffic.posts.')->prefix('traffic/posts')->controller(TrafficPostsController::class)->group(function(){
+        Route::get('/','index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::get('/{id}/show', 'show')->name('show');
+        Route::post('/{id}/update', 'update')->name('update');
+        Route::post('/{id}/delete', 'destroy')->name('destroy');
+        Route::get('data','getTrafficPostsData')->name('getTrafficPostsData');
+    });
+
+    Route::name('medical.posts.')->prefix('medical/posts')->controller(MedicalPostsController::class)->group(function(){
+        Route::get('/','index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::get('/{id}/show', 'show')->name('show');
+        Route::post('/{id}/update', 'update')->name('update');
+        Route::post('/{id}/delete', 'destroy')->name('destroy');
+        Route::get('data','getMedicalPostsData')->name('getMedicalPostsData');
+    });
 
     Route::name('recordings.')->prefix('recordings')->controller(RecordingsController::class)->group(function(){
         Route::get('/','index')->name('index');

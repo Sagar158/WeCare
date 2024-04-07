@@ -25,6 +25,7 @@ class Helper
     {
         $userTypeId = auth()->user()->user_type_id;
         $permissions = UserType::select('permissions')->where('id', $userTypeId)->first()->permissions;
+
         return json_decode($permissions);
     }
     public static function fetchUserType()

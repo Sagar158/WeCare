@@ -138,8 +138,58 @@
           </div>
 
         </div>
-      </section><!-- End Doctors Section -->
+      </section>
 
+      <section id="traffic_posts" class="traffic_posts">
+        <div class="container">
+
+          <div class="section-title">
+            <h2>Traffic Posts</h2>
+          </div>
+
+          <div class="row">
+            @if(!empty($trafficPosts))
+                @foreach ($trafficPosts as $traffic)
+                <div class="col-lg-6">
+                    <div class="member d-flex align-items-start">
+                    <div class="pic"><img src="{{ asset($traffic->image) }}" style="width: 100px; height:100px;" class="img-fluid" alt=""></div>
+                    <div class="member-info" style="padding-left:20px; ">
+                        <h4><a href="{{ route('trafficPost', $traffic->id) }}">{{ $traffic->title }}</a></h4>
+                        <p>{{ substr(strip_tags($traffic->description),0, 80) }}</p>
+                    </div>
+                    </div>
+                </div>
+                @endforeach
+            @endif
+          </div>
+
+        </div>
+      </section>
+      <section id="medical_posts" class="medical_posts">
+        <div class="container">
+
+          <div class="section-title">
+            <h2>Medical Posts</h2>
+          </div>
+
+          <div class="row">
+            @if(!empty($medicalPosts))
+                @foreach ($medicalPosts as $medical)
+                <div class="col-lg-6">
+                    <div class="member d-flex align-items-start">
+                    <div class="pic"><img src="{{ asset($medical->image) }}" style="width: 100px; height:100px;" class="img-fluid" alt=""></div>
+                    <div class="member-info" style="padding-left:20px; ">
+                        <h4><a href="{{ route('medicalPost', $medical->id) }}">{{ $medical->title }}</a></h4>
+                        <p>{{ substr(strip_tags($medical->description),0, 80) }}</p>
+                    </div>
+                    </div>
+                </div>
+                @endforeach
+            @endif
+          </div>
+
+        </div>
+      </section>
 
       <!-- ======= Contact Section ======= -->
       <section id="contact" class="contact">

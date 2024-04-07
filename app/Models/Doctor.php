@@ -27,7 +27,7 @@ class Doctor extends Model
         return $this->hasOne(HealthCare::class,'id','health_care_id');
     }
 
-    public function scopeHealthcare($query)
+    public function scopeUser($query)
     {
         $userType = auth()->user()->user_type_id;
         $userId = auth()->user()->id;

@@ -93,6 +93,58 @@ return array(
             'display'    => true,
         ),
     ),
+    'Traffic Posts' => array(
+        array(
+            'permission' => 'traffic.view',
+            'label'      => 'View',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'traffic.create',
+            'label'      => 'Create',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'traffic.edit',
+            'label'      => 'Edit',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'traffic.delete',
+            'label'      => 'Delete',
+            'note'       => '',
+            'display'    => true,
+        ),
+    ),
+    'Medical Post' => array(
+        array(
+            'permission' => 'medical.post.view',
+            'label'      => 'View',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'medical.post.create',
+            'label'      => 'Create',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'medical.post.edit',
+            'label'      => 'Edit',
+            'note'       => '',
+            'display'    => true,
+        ),
+        array(
+            'permission' => 'medical.post.delete',
+            'label'      => 'Delete',
+            'note'       => '',
+            'display'    => true,
+        ),
+    ),
     'Health Cares' => array(
         array(
             'permission' => 'healthcare.view',

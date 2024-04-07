@@ -103,8 +103,20 @@ class RecordingsController extends Controller
     public function getRecordingData()
     {
         $this->authorize('viewAny',Recordings::class);
+        $userType = auth()->user()->user_type_id;
+        $userId = auth()->user()->id;
 
-        $query = Recordings::with(['appointment']);
+
+        $query = Recordings::with(['appointment'])->whereHas('appointment',function($query) use($userId, $userType){
+            if($userType == 3)
+            {
+                return $query->where('patient_id', $userId);
+            }
+            else if($userType == 2)
+            {
+                return $query->where('health_care_id', auth()->user()->health_care_id);
+            }
+        });
 
         return DataTables::of($query)
             ->addColumn('appointment_number', function($recording){

@@ -6,11 +6,11 @@
         <i class="bi bi-envelope"></i> <a href="mailto:contact@example.com">info@wecare.com.np</a>
         <i class="bi bi-phone"></i> +977 12765344
       </div>
-      <div class="d-none d-lg-flex social-links align-items-center">
+      {{-- <div class="d-none d-lg-flex social-links align-items-center">
         <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
         <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
         <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
         <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-      </div>
+      </div> --}}
     </div>
   </div>

@@ -54,20 +54,32 @@
         </li>
         <li class="nav-item">
             <a href="{{ route('recordings.index') }}" class="nav-link">
-                <i class="link-icon" data-feather="link"></i>
+                <i class="link-icon" data-feather="video"></i>
                 <span class="link-title">Recordings</span>
             </a>
         </li>
         @endcan
-
+        <li class="nav-item nav-category">Blogs</li>
+        <li class="nav-item">
+            <a href="{{ route('traffic.posts.index') }}" class="nav-link">
+            <i class="link-icon" data-feather="target"></i>
+            <span class="link-title">Traffic Post</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('medical.posts.index') }}" class="nav-link">
+            <i class="link-icon" data-feather="voicemail"></i>
+            <span class="link-title">Medical Post</span>
+            </a>
+        </li>
 
         <li class="nav-item nav-category">Users</li>
-            <li class="nav-item">
-                <a href="{{ route('profile.edit') }}" class="nav-link">
-                <i class="link-icon" data-feather="edit"></i>
-                <span class="link-title">Profile</span>
-                </a>
-            </li>
+        <li class="nav-item">
+            <a href="{{ route('profile.edit') }}" class="nav-link">
+            <i class="link-icon" data-feather="edit"></i>
+            <span class="link-title">Profile</span>
+            </a>
+        </li>
         @can('viewAny',\App\Models\User::class)
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#users" role="button" aria-expanded="false" aria-controls="users">

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Doctor;
 use App\Models\ContactUs;
 use App\Models\HealthCare;
+use App\Models\MedicalPosts;
+use App\Models\TrafficPosts;
 use Illuminate\Http\Request;
 use App\Models\Specializations;
 
@@ -14,8 +16,10 @@ class MainController extends Controller
     {
         $doctors = Doctor::with('specialization')->orderBy('created_at','desc')->limit(4)->get();
         $specializations = Specializations::get();
+        $trafficPosts = TrafficPosts::orderBy('created_at','desc')->limit(4)->get();
+        $medicalPosts = MedicalPosts::orderBy('created_at','desc')->limit(4)->get();
 
-        return view('frontend.index',compact('doctors','specializations'));
+        return view('frontend.index',compact('doctors','specializations','trafficPosts','medicalPosts'));
     }
 
     public function center($centerId)
@@ -87,6 +91,27 @@ class MainController extends Controller
         return $daysInRange;
     }
 
+    public function trafficPost($trafficId)
+    {
+        $traffic = TrafficPosts::findOrFail($trafficId);
+        return view('frontend.traffic-post', compact('traffic'));
+    }
+    public function medicalPost($medicalId)
+    {
+        $medical = MedicalPosts::findOrFail($medicalId);
+        return view('frontend.medical-post', compact('medical'));
+    }
+
+    public function medicalPosts()
+    {
+        $posts = MedicalPosts::orderBy('created_at','desc')->get();
+        return view('frontend.medical-posts', compact('posts'));
+    }
+    public function trafficPosts()
+    {
+        $posts = TrafficPosts::orderBy('created_at','desc')->get();
+        return view('frontend.traffic-posts', compact('posts'));
+    }
 
 
 }

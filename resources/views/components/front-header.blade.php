@@ -9,6 +9,8 @@
         <ul>
           <li><a class="nav-link active" href="{{ route('home') }}">Home</a></li>
           <li><a class="nav-link" href="{{ route('all.doctors') }}">Doctors</a></li>
+          <li><a class="nav-link" href="{{ route('all.traffic.posts') }}">Traffic Posts</a></li>
+          <li><a class="nav-link" href="{{ route('all.medical.posts') }}">Medical Posts</a></li>
           <li class="dropdown"><a href="#"><span>Health Centers</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
                 @if(!empty(\App\Helpers\Helper::fetchHealthCareCenters()))
@@ -23,7 +25,7 @@
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
 
-      <a href="{{ route('login') }}" class="appointment-btn scrollto"><span class="d-none d-md-inline">Make an</span> Appointment</a>
+      <a href="{{ route('login') }}" class="appointment-btn scrollto"><span class="d-none d-md-inline">Login</span></a>
 
     </div>
   </header><!-- End Header -->

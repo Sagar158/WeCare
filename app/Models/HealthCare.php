@@ -21,20 +21,5 @@ class HealthCare extends Model
     {
         return $this->hasMany(Doctor::class,'health_care_id','id');
     }
-    public function scopeHealthcare($query)
-    {
-        $userType = auth()->user()->user_type_id;
-        $userId = auth()->user()->id;
-        $healthCareId = auth()->user()->health_care_id;
-        if($userType == 2)
-        {
-            return $query->where('healthcare_id', $healthCareId);
-        }
-        else if($userType == 3)
-        {
-            return $query->where('patient_id', $userId);
-        }
-
-    }
 
 }

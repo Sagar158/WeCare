@@ -119,7 +119,7 @@ class HealthCareController extends Controller
     {
         $this->authorize('viewAny',HealthCare::class);
 
-        $query = HealthCare::healthcare();
+        $query = HealthCare::query();
 
         return DataTables::of($query)
             ->addColumn('action', function ($healthcare) {

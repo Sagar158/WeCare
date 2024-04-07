@@ -20,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\Doctors' => 'App\Policies\DoctorPolicy',
         'App\Models\HealthCare' => 'App\Policies\HealthCarePolicy',
         'App\Models\Recordings' => 'App\Policies\RecordingsPolicy',
+        'App\Models\TrafficPosts' => 'App\Policies\TrafficPostsPolicy',
     ];
 
     /**

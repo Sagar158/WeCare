@@ -50,9 +50,5 @@ class Appointments extends Model
     }
 
 
-    public static function status(){
-
-    }
-
 
 }
