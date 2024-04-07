@@ -1,7 +1,7 @@
 <nav class="sidebar">
     <div class="sidebar-header">
       <a href="#" class="sidebar-brand">
-        We<span>Care</span>
+        <img src="{{ asset('assets/images/favicon.png') }}" style="width: 150px !important; height:50px !important;" alt="">
       </a>
       <div class="sidebar-toggler not-active">
         <span></span>
