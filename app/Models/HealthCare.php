@@ -22,4 +22,7 @@ class HealthCare extends Model
         return $this->hasMany(Doctor::class,'health_care_id','id');
     }
 
+
+
+
 }

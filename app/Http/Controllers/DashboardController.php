@@ -22,7 +22,7 @@ class DashboardController extends Controller
         $title = 'Dashboard';
         $specializations = Specializations::count();
         $doctors = Doctor::user()->count();
-        $healthCare = HealthCare::healthcare()->count();
+        $healthCare = HealthCare::count();
         $appointments = Appointments::user()->count();
         $trafficPosts = TrafficPosts::createdby()->count();
         $medicalPosts = MedicalPosts::createdby()->count();
