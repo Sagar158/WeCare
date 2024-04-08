@@ -124,17 +124,16 @@ class UserController extends Controller
         {
             $user->health_care_id = $request->health_care_id;
         }
-
-        $user->save();
-
-        if(!empty($validatedData['password']))
+        if(!empty($request->password))
         {
             $user->forceFill([
-                'password' => Hash::make($validatedData['password']),
+                'password' => Hash::make($request->password),
                 'remember_token' => Str::random(60),
             ])->save();
             // $user->password = Hash::make($validatedData['password'], ['rounds' => 12, 'driver' => 'bcrypt']);
         }
+        $user->save();
+
 
 
         return redirect()->route('users.index')->with('success','User updated Successfully');
