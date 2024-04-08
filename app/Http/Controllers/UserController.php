@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Helpers\Helper;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Hash;
@@ -62,8 +63,13 @@ class UserController extends Controller
         {
             $user->health_care_id = $request->health_care_id;
         }
-        $user->password = Hash::make($validatedData['password']);
+
         $user->save();
+
+            $user->forceFill([
+                'password' => Hash::make($validatedData['password']),
+                'remember_token' => Str::random(60),
+            ])->save();
 
         return redirect()->route('users.index')->with('success','User created Successfully');
 
@@ -118,12 +124,18 @@ class UserController extends Controller
         {
             $user->health_care_id = $request->health_care_id;
         }
+
+        $user->save();
+
         if(!empty($validatedData['password']))
         {
-
-            $user->password = Hash::make($validatedData['password']);
+            $user->forceFill([
+                'password' => Hash::make($validatedData['password']),
+                'remember_token' => Str::random(60),
+            ])->save();
+            // $user->password = Hash::make($validatedData['password'], ['rounds' => 12, 'driver' => 'bcrypt']);
         }
-        $user->save();
+
 
         return redirect()->route('users.index')->with('success','User updated Successfully');
     }
