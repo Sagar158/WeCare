@@ -52,6 +52,8 @@
                 <span class="link-title">Appointments</span>
             </a>
         </li>
+        @endcan
+        @can('viewAny',\App\Models\Recordings::class)
         <li class="nav-item">
             <a href="{{ route('recordings.index') }}" class="nav-link">
                 <i class="link-icon" data-feather="video"></i>
@@ -60,19 +62,22 @@
         </li>
         @endcan
         <li class="nav-item nav-category">Blogs</li>
+        @can('viewAny',\App\Models\TrafficPosts::class)
         <li class="nav-item">
             <a href="{{ route('traffic.posts.index') }}" class="nav-link">
             <i class="link-icon" data-feather="target"></i>
             <span class="link-title">Traffic Post</span>
             </a>
         </li>
+        @endcan
+        @can('viewAny',\App\Models\MedicalPosts::class)
         <li class="nav-item">
             <a href="{{ route('medical.posts.index') }}" class="nav-link">
             <i class="link-icon" data-feather="voicemail"></i>
             <span class="link-title">Medical Post</span>
             </a>
         </li>
-
+        @endcan
         <li class="nav-item nav-category">Users</li>
         <li class="nav-item">
             <a href="{{ route('profile.edit') }}" class="nav-link">
