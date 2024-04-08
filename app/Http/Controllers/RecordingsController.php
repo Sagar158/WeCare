@@ -114,7 +114,7 @@ class RecordingsController extends Controller
             }
             else if($userType == 2)
             {
-                return $query->where('health_care_id', auth()->user()->health_care_id);
+                return $query->where('healthcare_id', auth()->user()->health_care_id);
             }
         });
 

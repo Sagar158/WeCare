@@ -3,7 +3,9 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <div class="auth-form-wrapper px-4 py-5">
-        <a href="#" class="noble-ui-logo d-block mb-2">We<span>Care</span></a>
+        <a href="#" class="noble-ui-logo d-block mb-2">
+            <img src="{{ asset('assets/images/favicon.png') }}" style="width: 150px !important; height:50px !important;" alt="">
+        </a>
         <h5 class="text-muted font-weight-normal mb-4">Welcome back! Log in to your account.</h5>
         <form method="POST" action="{{ route('login') }}">
             @csrf
